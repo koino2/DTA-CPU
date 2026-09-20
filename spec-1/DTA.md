@@ -18,7 +18,7 @@ Most existing ISAs have instructions for each function a processor can perform, 
 Higher level operations can be constructed using these primitives.  
 
 The processor is built primarily from:
-- A register bank / cache
+- A small bank of working memory / cache / register bank
 - An ALU
 - A program counter
 - DSC (Device Slot Controller) for I/O
@@ -53,7 +53,6 @@ Example:
 SET ALU_OP, ADD
 ```
 This sets the value of the ALU Operation register to the ADD function
-> Here, ADD represents the encoded value corresponding to the addition operation. The assembler can translate the symbolic name ADD into the appropriate numeric value.
 
 ### 2.3 ```PULSE```
 
@@ -102,6 +101,53 @@ Finally, the write address is set to `3`. The ALU output is copied into `WRITEVA
 
 At a high level, this does the same job of adding two values from the register bank and saving it, but with only 3 simple instructions.
 
-> Note that the ALU does not need a ``PULSE`` instruction to do its work. The ALU is combinational / continuously active, so whenever ``ALU_A``, ``ALU_B`` and ``ALU_OP`` have values, ``ALU_OUT`` reflects the result. Meanwhile, the memory writing component / procedure is time-based and is not continuously active, and hence it needs a ``PULSE`` instruction.
+> Note that the ALU does not need a ``PULSE`` instruction to do its work. The ALU is combinational / continuously active, so whenever ``ALU_A``, ``ALU_B`` and ``ALU_OP`` have values, ``ALU_OUT`` reflects the result. Meanwhile, the memory writing component / procedure is time-based and is not continuously active, and hence it needs a ``PULSE`` instruction.  
+
+> Here, ``ALU_OP``, ``ALU_A``, etc represents the encoded value corresponding to the addition operation. The assembler can translate the symbolic name ADD into the appropriate numeric value. Similarly, ``ALU_A``, ``ALU_B``, ``ALU_OP``, ``READOUT``, etc are just hypothetical names for the numeric addresses of those registers.
 
 The ISA therefore describes how information is transferred and how hardware components are activated, rather than defining a large collection of individual operations.
+
+## 3. CPU Architecture
+DTA CPU components are controlled through interface registers and pulse pins.
+### 3.1 Registers and Pulse Pins
+#### 3.1.1 Registers
+The width of each register is equal to the word size of the processor.  
+Registers may be read only, write only, or read and write capable.  
+Every register is connected to a central Control Unit with addresses from where the ``SET`` and ``COPY`` instructions are executed.
+#### 3.1.2 Pulse Pins
+A pulse pin or simply pin, is a 1-wide wire that is designed to be set to ``HIGH`` for a small amount of time to trigger a time-based event.  
+All pulse pins are also connected to the Control Unit with addresses to execute ``PULSE`` instructions.
+
+### Instruction cycle
+
+## 4. CPU Components
+
+The CPU is made of these core systems: 
+- Working memory
+- ALU
+- RAM Interface
+- Program Counter
+- Device Slot Controller (DSC)
+- Instruction Decoder
+
+### 4.1 Working Memory
+Each CPU has a bank of working memory, or cache.  
+
+The working memory provides the main fast memory available to the CPU and stores the currently executing program and temporary data.  
+
+A fixed portion of the address space starting at address 0 is reserved for a boot program. This address range is mapped to a ROM or other non-volatile memory device, so attempting to read those addresses returns the contents of that device instead of the working memory.
+
+To interface with the memory, the following registers and pulse pins are provided: 
+
+|   Register    | Identifier | Read/Write |                                    Description                                     |
+|:-------------:|:----------:|:----------:|:----------------------------------------------------------------------------------:|
+| Read Address  |   R_ADDR   | Write Only |                This register stores the address that is to be read.                |
+|  Read Output  |   R_OUT    | Read Only  |   This register stores the value that has been read from the specified address.    |
+| Write Address |   W_ADDR   | Write Only |             This register stores the address that is to be written to.             |
+|  Write Value  |   W_VAL    | Write Only | This register stores the value that has is to be written to the specified address. |
+
+|     Pin     | Identifier |             Description             |
+|:-----------:|:----------:|:-----------------------------------:|
+| Write Pulse |   WRITE    | This pin enables the writing system |
+
+Additionally, there is also a seperate interface used for getting instructions for the fetch step.
