@@ -143,6 +143,8 @@ To interface with the memory, the following registers and pulse pins are provide
 |:-------------:|:----------:|:----------:|:----------------------------------------------------------------------------------:|
 | Read Address  |   R_ADDR   | Write Only |                This register stores the address that is to be read.                |
 |  Read Output  |   R_OUT    | Read Only  |   This register stores the value that has been read from the specified address.    |
+| Read Output 2 |   R_OUT2   | Read Only  |    This register stores the value that has been read from the address R_ADDR+1     |
+| Read Output 3 |   R_OUT3   | Read Only  |    This register stores the value that has been read from the address R_ADDR+2     |
 | Write Address |   W_ADDR   | Write Only |             This register stores the address that is to be written to.             |
 |  Write Value  |   W_VAL    | Write Only | This register stores the value that has is to be written to the specified address. |
 
@@ -150,4 +152,18 @@ To interface with the memory, the following registers and pulse pins are provide
 |:-----------:|:----------:|:-----------------------------------:|
 | Write Pulse |   WRITE    | This pin enables the writing system |
 
-Additionally, there is also a seperate interface used for getting instructions for the fetch step.
+### 4.2 Arithmetic and Logic Unit (ALU)
+The ALU component is a module that can perform various operations on values.
+
+Actual functions and operations that the ALU performs are implementation defined and is not specified by the ISA.
+
+The ALU interface registers and pins are as follows: 
+
+|   Register    | Identifier | Read/Write |                                   Description                                    |
+|:-------------:|:----------:|:----------:|:--------------------------------------------------------------------------------:|
+|     ALU A     |   ALU_A    | Write Only |   The "A" value, on which operations are performed along with or without ALU_B   |
+|     ALU B     |   ALU_B    | Write Only |        The "B" value, on which operations are performed along with ALU_A         |
+| ALU Operation |   ALU_OP   | Write Only | The operation code that defines which operation is performed on ALU_A and ALU_B  |
+|  ALU Output   |  ALU_OUT   | Read Only  | The output calculated by the ALU, based on ALU_A, ALU_B and the operation ALU_OP |
+
+The ALU is continuously active, and it does not need a pulse for ALU_OP to be computed.
