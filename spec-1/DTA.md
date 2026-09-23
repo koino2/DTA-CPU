@@ -119,6 +119,17 @@ A pulse pin or simply pin, is a 1-wide wire that is designed to be set to ``HIGH
 All pulse pins are also connected to the Control Unit with addresses to execute ``PULSE`` instructions.
 
 ### Instruction cycle
+DTA instructions have a fixed length of 3 bytes. The processor executes one instruction per clock cycle.  
+
+During the start of an instruction cycle, the Program Counter provides the address of the current instruction being executed to the working memory read address. The address is sent to the working memory through another wire called the PC Address Line. This line merges with the main read address line and is finally connected to the working memory.
+
+This causes the memory bank to look up the address and return the instruction in the form of 3 bytes in registers ``R_OUT``, ``R_OUT2``, and ``R_OUT3``.
+
+These bytes are sent to an instruction decoder and control unit. As soon as these bytes arrive, the PC Address Line is logically disconnected from the working memory address. This frees up the address line for main instruction execution.
+
+Once the bytes reach the instruction decoder, the ``SET``, ``COPY``, and ``PULSE`` instructions are executed.
+
+The program counter is incremented during the falling edge of the clock, and the cycle repeats.
 
 ## 4. CPU Components
 
