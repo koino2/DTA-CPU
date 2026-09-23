@@ -193,9 +193,9 @@ Reads are continuously reflected through RAM_R_OUT, while writes are performed b
 | RAM Write Address | RAM_W_ADDR | Write Only |              This register stores the address that is to be written to in RAM.               |
 |  RAM Write Value  | RAM_W_VAL  | Write Only |  This register stores the value that has is to be written to the specified address in RAM.   |
 
-|       Pin       | Identifier |                                                   Description                                                    |
-|:---------------:|:----------:|:----------------------------------------------------------------------------------------------------------------:|
-| RAM Write Pulse | RAM_WRITE  | This pin triggers the write operation, writing the value of ``RAM_W_VAL`` to the address ``RAM_W_ADDDR`` in ram. |
+|       Pin       | Identifier |                                                   Description                                                   |
+|:---------------:|:----------:|:---------------------------------------------------------------------------------------------------------------:|
+| RAM Write Pulse | RAM_WRITE  | This pin triggers the write operation, writing the value of ``RAM_W_VAL`` to the address ``RAM_W_ADDR`` in ram. |
 
 ### 4.4 Program Counter
 The program counter is the component that stores the address of the instruction currently being executed.
@@ -220,8 +220,31 @@ The program counter is incremented during the falling edge of the clock. It is i
 For unconditional jumps, the Program Counter register can be directly updated to order to effectively jump to the address.
 
 Conditional jumps are also possible, by checking if one value is equal to another value.
-When the Jump pin is triggered, a conditional jump is executed, causing the program counter to jump to the value of PC_JUMP only if PC_VALUE is equal to PC_TARGET.
+When the Jump pin is triggered, a conditional jump is executed, causing the program counter to jump to the value of PC_JMP only if PC_VALUE is equal to PC_TARGET.
 
 > The program counter increments during the falling edge, while the jump actions (and all execution) are performed during the clock's high period. Thus, the clock increments even after the jump statement, and so the next instruction that will be executed is the instruction at the jump address + 3.
 
 ### 4.5 Device Slot Controller
+The Device Slot Controller (DSC) is a component for communicating with external devices and general I/O.
+
+Communication with DSC devices happens through interface registers DSC_D0-7, DSC_STATUS and DSC_DEVICE, as well as a pin DSC_WRITE
+
+|     Register      |  Identifier   |  Read/Write  |                                      Description                                      |
+|:-----------------:|:-------------:|:------------:|:-------------------------------------------------------------------------------------:|
+|   DSC Data 0-7    | DSC_D0-DSC_D7 | Read & Write | Eight general purpose interface registers labelled DSC_D0, DSC_D1, DSC_D2, ... DSC_D7 |
+| DSC Device Status |  DSC_STATUS   |  Read Only   |    A one byte register reflecting the status of the device, stated by the device.     |
+|    DSC Device     |  DSC_DEVICE   |  Write Only  |               The address of the device currently activated by the DSC.               |
+
+|    Pin    | Identifier |                                    Description                                     |
+|:---------:|:----------:|:----------------------------------------------------------------------------------:|
+| DSC Write | DSC_WRITE  | Triggering this pin writes all 8 DSC Data bytes to the relevant device data bytes. |
+
+Each device slot has its own device address. The number of slots depends on the implementation of the DSC.
+
+The DSC device register holds the address of the device currently being interacted with. When a value is present in the DSC Device register, all other DSC device interfaces apart from the one with that address are deactivated.
+
+The DSC data bytes 0-7 are for communicating with the activated device. The DSC Device Status register is read only, and it holds information about the activated device's status. This status register is controlled by the device.
+
+The DSC Write pin is used to write all of the DSC Data pins to the device.
+
+Each device exposes 8 data registers and 1 status register. The DSC selects the device currently being accessed and provides the interface reading/writing data to it.
