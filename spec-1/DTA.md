@@ -69,7 +69,7 @@ This pulses the write pin, which makes the register bank perform the writing pro
 
 Each component of the processor can be controlled through its interface registers and control signals.
 
-By changing the values of these registers, **software can control where data comes from, where it goes, and how it is processed**.  
+By changing the values of these registers, software can control where data comes from, where it goes, and how it is processed.  
 
 By selecting values from one component, transferring them to another, configuring that component, and triggering any required state changes, complex operations can be constructed entirely from the three primitive instructions.
 
@@ -155,7 +155,7 @@ To interface with the memory, the following registers and pulse pins are provide
 ### 4.2 Arithmetic and Logic Unit (ALU)
 The ALU component is a module that can perform various operations on values.
 
-Actual functions and operations that the ALU performs are implementation defined and is not specified by the ISA.
+Actual functions and operations that the ALU performs are implementation defined and are not specified by the ISA.
 
 The ALU interface registers and pins are as follows: 
 
@@ -167,3 +167,50 @@ The ALU interface registers and pins are as follows:
 |  ALU Output   |  ALU_OUT   | Read Only  | The output calculated by the ALU, based on ALU_A, ALU_B and the operation ALU_OP |
 
 The ALU is continuously active, and it does not need a pulse for ALU_OP to be computed.
+
+### 4.3 RAM Interface
+The CPU communicates with external RAM through a dedicated interface.
+
+To the processor, RAM appears as a large, addressable memory space containing values at different addresses.
+
+Reads are continuously reflected through RAM_R_OUT, while writes are performed by providing an address and value and pulsing RAM_WRITE.
+
+|     Register      | Identifier | Read/Write |                                         Description                                          |
+|:-----------------:|:----------:|:----------:|:--------------------------------------------------------------------------------------------:|
+| RAM Read Address  | RAM_R_ADDR | Write Only |                This register stores the address that is to be read from RAM.                 |
+|  RAM Read Output  | RAM_R_OUT  | Read Only  | This register continuously reflects the value stored at the address specified by RAM_R_ADDR. |
+| RAM Write Address | RAM_W_ADDR | Write Only |              This register stores the address that is to be written to in RAM.               |
+|  RAM Write Value  | RAM_W_VAL  | Write Only |  This register stores the value that has is to be written to the specified address in RAM.   |
+
+|       Pin       | Identifier |                                                   Description                                                    |
+|:---------------:|:----------:|:----------------------------------------------------------------------------------------------------------------:|
+| RAM Write Pulse | RAM_WRITE  | This pin triggers the write operation, writing the value of ``RAM_W_VAL`` to the address ``RAM_W_ADDDR`` in ram. |
+
+### 4.4 Program Counter
+The program counter is the component that stores the address of the instruction currently being executed.
+
+It has a adder connected to it to increment the address by 3 every instruction, effectively moving to the next instruction in memory.
+
+The program counter also facilitates direct jump and conditional jump operations.
+
+|    Register     | Identifier |  Read/Write  |                               Description                               |
+|:---------------:|:----------:|:------------:|:-----------------------------------------------------------------------:|
+| Program Counter |     PC     | Read & Write |         The current address of the instruction being executed.          |
+|      Value      |  PC_VALUE  |  Write Only  |         The value which is compared for conditional statements          |
+|     Target      | PC_TARGET  |  Write Only  |               The target value for conditional statements               |
+|      Jump       |   PC_JMP   |  Write Only  | The address which will be loaded into the PC if the comparison succeeds |
+
+| Pin  | Identifier |                   Description                    |
+|:----:|:----------:|:------------------------------------------------:|
+| Jump |    JUMP    | This pin triggers the conditional jump sequence. |
+
+The program counter is incremented during the falling edge of the clock. It is incremented by 3 every time.
+
+For unconditional jumps, the Program Counter register can be directly updated to order to effectively jump to the address.
+
+Conditional jumps are also possible, by checking if one value is equal to another value.
+When the Jump pin is triggered, a conditional jump is executed, causing the program counter to jump to the value of PC_JUMP only if PC_VALUE is equal to PC_TARGET.
+
+> The program counter increments during the falling edge, while the jump actions (and all execution) are performed during the clock's high period. Thus, the clock increments even after the jump statement, and so the next instruction that will be executed is the instruction at the jump address + 3.
+
+### 4.5 Device Slot Controller
