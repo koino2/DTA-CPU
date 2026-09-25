@@ -275,17 +275,17 @@ When the Jump pin is triggered, a conditional jump is executed, causing the prog
 ### 4.5 Device Slot Controller
 The Device Slot Controller (DSC) is a component for communicating with external devices and general I/O.
 
-Communication with DSC devices happens through interface registers DSC_D0-7, DSC_STATUS and DSC_DEVICE, as well as a pin DSC_WRITE
+Communication with DSC devices happens through interface registers DSC_D0-7, DSC_STATUS and DSC_DEVICE, as well as 5 general purpose pulse pins.
 
 |     Register      |  Identifier   |         Address         |  Read/Write  |                                      Description                                      |
 |:-----------------:|:-------------:|:-----------------------:|:------------:|:-------------------------------------------------------------------------------------:|
 |   DSC Data 0-7    | DSC_D0-DSC_D7 | 18-25 [10010] - [11001] | Read & Write | Eight general purpose interface registers labelled DSC_D0, DSC_D1, DSC_D2, ... DSC_D7 |
-| DSC Device Status |  DSC_STATUS   |       26 [11010]        |  Read Only   |    A one byte register reflecting the status of the device, stated by the device.     |
+| DSC Device Status |  DSC_STATUS   |       26 [11010]        |  Read Only   |    A one word register reflecting the status of the device, stated by the device.     |
 |    DSC Device     |  DSC_DEVICE   |       27 [11011]        |  Write Only  |               The address of the device currently activated by the DSC.               |
 
-|    Pin    | Identifier | Address |                                    Description                                     |
-|:---------:|:----------:|:-------:|:----------------------------------------------------------------------------------:|
-| DSC Write | DSC_WRITE  | 3 [11]  | Triggering this pin writes all 8 DSC Data bytes to the relevant device data bytes. |
+|     Pin     |  Identifier   |    Address    |                       Description                       |
+|:-----------:|:-------------:|:-------------:|:-------------------------------------------------------:|
+| DSC Pin 0-4 | DSC_P0-DSC_P4 | 3-7 [011-111] | General purpose pulse pins for interfacing with devices |
 
 Each device slot has its own device address. The number of slots depends on the implementation of the DSC.
 
@@ -293,9 +293,9 @@ The DSC device register holds the address of the device currently being interact
 
 The DSC data registers 0-7 are for communicating with the selected device. The DSC Device Status register is read only, and it holds information about the activated device's status. This status register is controlled by the device.
 
-The DSC Write pin is used to write all of the DSC Data pins to the device.
+Additionally, there are 5 general purpose pulse pins for each device. Triggering one of the DSC pins from the CPU pulses the appropriate pin on that device.
 
-Each device exposes 8 data registers and 1 status register. The DSC selects the device currently being accessed and provides the interface reading/writing data to it.
+Each device exposes 8 data registers, 1 status register and 5 pulse pins. The DSC selects the device currently being accessed and provides the interface for reading from and writing to it.
 
 ## Complete tables of registers and pins
 
@@ -327,11 +327,11 @@ Each device exposes 8 data registers and 1 status register. The DSC selects the 
 
 ### Pins
 
-|       Pin       | Identifier | Address |                                                   Description                                                   |
-|:---------------:|:----------:|:-------:|:---------------------------------------------------------------------------------------------------------------:|
-|   Write Pulse   |   WRITE    |  0 [0]  |                                       This pin enables the writing system                                       |
-| RAM Write Pulse | RAM_WRITE  |  1 [1]  | This pin triggers the write operation, writing the value of ``RAM_W_VAL`` to the address ``RAM_W_ADDR`` in ram. |
-|      Jump       |    JUMP    | 2 [10]  |                                This pin triggers the conditional jump sequence.                                 |
-|    DSC Write    | DSC_WRITE  | 3 [11]  |               Triggering this pin writes all 8 DSC Data bytes to the relevant device data bytes.                |
+|       Pin       |  Identifier   |    Address    |                                                   Description                                                   |
+|:---------------:|:-------------:|:-------------:|:---------------------------------------------------------------------------------------------------------------:|
+|   Write Pulse   |     WRITE     |     0 [0]     |                                       This pin enables the writing system                                       |
+| RAM Write Pulse |   RAM_WRITE   |     1 [1]     | This pin triggers the write operation, writing the value of ``RAM_W_VAL`` to the address ``RAM_W_ADDR`` in ram. |
+|      Jump       |     JUMP      |    2 [10]     |                                This pin triggers the conditional jump sequence.                                 |
+|   DSC Pin 0-4   | DSC_P0-DSC_P4 | 3-7 [011-111] |                             General purpose pulse pins for interfacing with devices                             |
 
 ## the end
