@@ -1,0 +1,61 @@
+infinite error program
+assembly:
+    NOP
+    SET R_OUT 0
+    SET PC 0
+values:
+    0 0 0
+    2 1 0
+    2 14 0
+array: {0, 0, 0, 2, 1, 0, 2, 14, 0}
+
+gpu checkerboard program (assuming gpu is in slot 0, rom = 512 bytes)
+basics:
+    x = 0
+    y = 0
+
+    forever:
+    x += 2
+    if x == 64:
+        x = 1
+        y += 1
+    if x == 63:
+        x = 0
+        y += 1
+    set pixel x y 1
+assembly:
+    NOP
+
+    SET DSC_DEVICE 0
+
+    SET W_ADDR 512
+    SET W_VAL 0
+    PULSE WRITE
+
+    SET W_ADDR 513
+    SET W_VAL 0
+    PULSE WRITE
+
+    # now the forever loop
+    SET R_ADDR 512
+    COPY R_OUT ALU_A
+    SET ALU_B 2
+    COPY ALU_OUT W_VAL
+    SET W_ADDR 512
+    PULSE WRITE
+
+    SET R_ADDR 512
+    COPY R_OUT PC_VAL
+    SET PC_TARGET 64
+    SET PC_JMP todo put the line here weoihrweoihrowiehrowiehrowiehrowiehrowiehrowiehr
+    JUMP
+    SET PC_TARGET 63
+    SET PC_JMP todo waaaaaaaaaaaaaaa
+    JUMP
+
+    SET R_ADDR 512
+    COPY R_OUT DSC_D1
+    SET R_ADDR 513
+    COPY R_OUT DSC_D2
+    SET DSC_D3 1
+    SET DSC_D0 1
