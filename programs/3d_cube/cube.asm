@@ -1,34 +1,82 @@
-const cube_0_X -20
-const cube_0_Y -20
-const cube_0_Z -20
+mark cube_0_X
+    set w_val -20
+    set pc getVertexReturn
+mark cube_0_Y
+    set w_val -20
+    set pc getVertexReturn
+mark cube_0_Z
+    set w_val -20
+    set pc getVertexReturn
 
-const cube_1_X 20
-const cube_1_Y -20
-const cube_1_Z -20
+mark cube_1_X
+    set w_val 20
+    set pc getVertexReturn
+mark cube_1_Y
+    set w_val -20
+    set pc getVertexReturn
+mark cube_1_Z
+    set w_val -20
+    set pc getVertexReturn
 
-const cube_2_X -20
-const cube_2_Y 20
-const cube_2_Z -20
+mark cube_2_X
+    set w_val -20
+    set pc getVertexReturn
+mark cube_2_Y
+    set w_val 20
+    set pc getVertexReturn
+mark cube_2_Z
+    set w_val -20
+    set pc getVertexReturn
 
-const cube_3_X 20
-const cube_3_Y 20
-const cube_3_Z -20
+mark cube_3_X
+    set w_val 20
+    set pc getVertexReturn
+mark cube_3_Y
+    set w_val 20
+    set pc getVertexReturn
+mark cube_3_Z
+    set w_val -20
+    set pc getVertexReturn
 
-const cube_4_X -20
-const cube_4_Y -20
-const cube_4_Z 20
+mark cube_4_X
+    set w_val -20
+    set pc getVertexReturn
+mark cube_4_Y
+    set w_val -20
+    set pc getVertexReturn
+mark cube_4_Z
+    set w_val 20
+    set pc getVertexReturn
 
-const cube_5_X 20
-const cube_5_Y -20
-const cube_5_Z 20
+mark cube_5_X
+    set w_val 20
+    set pc getVertexReturn
+mark cube_5_Y
+    set w_val -20
+    set pc getVertexReturn
+mark cube_5_Z
+    set w_val 20
+    set pc getVertexReturn
 
-const cube_6_X -20
-const cube_6_Y 20
-const cube_6_Z 20
+mark cube_6_X
+    set w_val -20
+    set pc getVertexReturn
+mark cube_6_Y
+    set w_val 20
+    set pc getVertexReturn
+mark cube_6_Z
+    set w_val 20
+    set pc getVertexReturn
 
-const cube_7_X 20
-const cube_7_Y 20
-const cube_7_Z 20
+mark cube_7_X
+    set w_val 20
+    set pc getVertexReturn
+mark cube_7_Y
+    set w_val 20
+    set pc getVertexReturn
+mark cube_7_Z
+    set w_val 20
+    set pc getVertexReturn
 
 const focalLength = 70
 
@@ -193,6 +241,8 @@ mark get_sin
 
     set pc sinExit
 
+const sinExit 518
+
 const rot_0_X 519
 const rot_0_Y 520
 const rot_0_Z 521
@@ -238,7 +288,7 @@ const rotateVertex_SaveX 551 # address
 const rotateVertex_SaveY 552 # address
 const rotateVertex_SaveZ 553 # address
 const rotateVertex_temp1 554 # address
-const rotateVertex_return
+const rotateVertex_return 555
 mark rotateVertex
     set r_addr rotateVertex_X
     copy r_out alu_a
@@ -305,8 +355,209 @@ mark rotateVertex
     set r_addr rotateVertex_return
     copy r_out pc
 
+const getVertex_number 556
+const getVertex_X 557
+const getVertex_Y 558
+const getVertex_Z 559
+const getVertexReturnNumber 560
+const getVertex_Exit
+mark getVertex
+    set r_addr getVertex_number
+    copy r_out pc_value
+
+    set w_addr getVertex_X
+
+    set pc_target 0
+    set pc_jmp cube_0_X
+    pulse jump
+    set pc_target 1
+    set pc_jmp cube_1_X
+    pulse jump
+    set pc_target 2
+    set pc_jmp cube_2_X
+    pulse jump
+    set pc_target 3
+    set pc_jmp cube_3_X
+    pulse jump
+    set pc_target 4
+    set pc_jmp cube_4_X
+    pulse jump
+    set pc_target 5
+    set pc_jmp cube_5_X
+    pulse jump
+    set pc_target 6
+    set pc_jmp cube_6_X
+    pulse jump
+    set pc_target 7
+    set pc_jmp cube_7_X
+    pulse jump
+
+    mark getVertexReturn0
+
+    set w_addr getVertex_Y
+
+    set pc_target 0
+    set pc_jmp cube_0_Y
+    pulse jump
+    set pc_target 1
+    set pc_jmp cube_1_Y
+    pulse jump
+    set pc_target 2
+    set pc_jmp cube_2_Y
+    pulse jump
+    set pc_target 3
+    set pc_jmp cube_3_Y
+    pulse jump
+    set pc_target 4
+    set pc_jmp cube_4_Y
+    pulse jump
+    set pc_target 5
+    set pc_jmp cube_5_Y
+    pulse jump
+    set pc_target 6
+    set pc_jmp cube_6_Y
+    pulse jump
+    set pc_target 7
+    set pc_jmp cube_7_Y
+    pulse jump
+
+    mark getVertexReturn1
+
+    set w_addr getVertex_Y
+
+    set pc_target 0
+    set pc_jmp cube_0_Y
+    pulse jump
+    set pc_target 1
+    set pc_jmp cube_1_Y
+    pulse jump
+    set pc_target 2
+    set pc_jmp cube_2_Y
+    pulse jump
+    set pc_target 3
+    set pc_jmp cube_3_Y
+    pulse jump
+    set pc_target 4
+    set pc_jmp cube_4_Y
+    pulse jump
+    set pc_target 5
+    set pc_jmp cube_5_Y
+    pulse jump
+    set pc_target 6
+    set pc_jmp cube_6_Y
+    pulse jump
+    set pc_target 7
+    set pc_jmp cube_7_Y
+    pulse jump
+
+    mark getVertexReturn2
+
+    set pc, getVertex_Exit
+
+mark getVertexReturn
+    set r_addr getVertexReturnNumber
+    copy r_out pc_value
+    set pc_target 0
+    set pc_jmp getVertexReturn0
+    pulse jump
+    set pc_target 1
+    set pc_jmp getVertexReturn1
+    pulse jump
+    set pc_target 2
+    set pc_jmp getVertexReturn2
+    pulse jump
+
+const rotate_currentVertex = 556
 mark rotate
-    # do stuff
+    set r_addr rotate_currentVertex
+    copy r_out alu_a
+    set alu_b 3
+    set alu_op MUL
+    copy alu_out alu_a
+    set alu_b cube_0_X
+    set alu_op ADD
+    copy alu_out r_addr
+    copy r_out rotateVertex_X
+
+    copy alu_out alu_a
+    set alu_b 1
+    copy alu_out r_addr
+    copy r_out rotateVertex_Y
+
+    copy alu_out alu_a
+    set alu_b 1
+    copy alu_out r_addr
+    copy r_out rotateVertex_Z
+
+    set r_addr rotate_currentVertex
+    copy r_out alu_a
+    set alu_b 3
+    set alu_op MUL
+    copy alu_out alu_a
+    set alu_b rot_0_X
+    set alu_op ADD
+    copy alu_out w_val
+    set w_addr rotateVertex_SaveX
+    pulse write
+
+    copy alu_out alu_a
+    set alu_b 1
+    copy alu_out w_val
+    set w_addr rotateVertex_SaveY
+    pulse write
+
+    copy alu_out alu_a
+    set alu_b 1
+    copy alu_out w_val
+    set w_addr rotateVertex_SaveZ
+    pulse write
+
+    set w_addr sin
+    set r_addr rotY
+    copy r_out w_val
+    pulse write
+
+    set pc, get_sin
+
+    set w_addr sinExit
+    copy sinExit1 w_val
+    write
+
+    mark sinExit1
+
+    set r_addr sinOut
+    copy r_out rotateVertex_SinTheta
+
+    set r_addr rotY
+    copy r_out alu_a
+    set alu_b 9
+    set alu_op ADD
+    copy alu_out w_val
+    set w_addr sin
+    pulse write
+
+    set pc, get_sin
+
+    set w_addr sinExit
+    copy sinExit2 w_val
+    write
+
+    mark sinExit2
+
+    set r_addr rotate_currentVertex
+    copy r_out alu_a
+    set alu_b 1
+    set alu_op ADD
+    copy alu_out w_val
+    set w_addr rotate_currentVertex
+    write
+
+    copy alu_out pc_value
+    set pc_target 8
+    set pc_jmp project
+    pulse jump
+
+    set pc rotate
 
 mark project
     # do stuff
