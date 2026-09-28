@@ -123,8 +123,14 @@ mark get_sin90
 const sin 514
 const sinOut 515
 const sinHalf = 516
+const orgSine = 517
 mark get_sin
     set r_addr sin
+
+    set w_addr orgSine
+    copy r_out w_val
+    pulse write
+
     copy r_out alu_a
     set alu_b 18
     set alu_op MOD
@@ -138,6 +144,7 @@ mark get_sin
     copy alu_out pc_value
     set pc_target 1
     set pc_jmp sinCase1
+    pulse jump
 
     set r_addr sinHalf
     copy r_out w_val
@@ -160,14 +167,17 @@ mark get_sin
 
     mark sine90Return
 
-    set r_addr sin90Out
+    set r_addr orgSine
     copy r_out alu_a
     set alu_b 18
     set alu_op COMP
     copy alu_out pc_value
     set pc_target 2
     set pc_jmp sin_comp2out
+    pulse jump
 
+    set r_addr sin90Out
+    copy r_out alu_a
     set alu_b -1
     set alu_op MUL
     copy alu_out w_val
@@ -176,6 +186,7 @@ mark get_sin
 
     mark sin_comp2out
 
+    set r_addr sin90Out
     copy r_out w_val
     set w_addr sinOut
     pulse write
