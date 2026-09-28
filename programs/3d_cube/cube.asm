@@ -192,3 +192,121 @@ mark get_sin
     pulse write
 
     set pc sinExit
+
+const rot_0_X 519
+const rot_0_Y 520
+const rot_0_Z 521
+
+const rot_1_X 522
+const rot_1_Y 523
+const rot_1_Z 524
+
+const rot_2_X 525
+const rot_2_Y 526
+const rot_2_Z 527
+
+const rot_3_X 528
+const rot_3_Y 529
+const rot_3_Z 530
+
+const rot_4_X 531
+const rot_4_Y 532
+const rot_4_Z 533
+
+const rot_5_X 534
+const rot_5_Y 535
+const rot_5_Z 536
+
+const rot_6_X 537
+const rot_6_Y 538
+const rot_6_Z 539
+
+const rot_7_X 540
+const rot_7_Y 541
+const rot_7_Z 542
+
+const rotX 543
+const rotY 544
+const rotZ 545
+
+const rotateVertex_SinTheta 546 # value
+const rotateVertex_CosTheta 547 # value
+const rotateVertex_X 548 # value
+const rotateVertex_Y 549 # value
+const rotateVertex_Z 550 # value
+const rotateVertex_SaveX 551 # address
+const rotateVertex_SaveY 552 # address
+const rotateVertex_SaveZ 553 # address
+const rotateVertex_temp1 554 # address
+const rotateVertex_return
+mark rotateVertex
+    set r_addr rotateVertex_X
+    copy r_out alu_a
+    set r_addr rotateVertex_CosTheta
+    copy r_out alu_b
+    set alu_op MUL
+    copy alu_out w_val
+    set w_addr rotateVertex_temp1
+    pulse write
+
+    set r_addr rotateVertex_Z
+    copy r_out alu_a
+    set r_addr rotateVertex_SinTheta
+    copy r_out alu_b
+    set alu_op MUL
+    copy alu_out alu_b
+
+    set r_addr rotateVertex_temp1
+    copy r_out alu_a
+    set alu_op ADD
+
+    copy alu_out alu_a
+    set alu_b 127
+    set alu_op DIV
+    copy alu_out w_val
+    set w_addr rotateVertex_SaveX
+    pulse write
+
+    set r_addr rotateVertex_Y
+    copy r_out w_val
+    set w_addr rotateVertex_SaveY
+    pulse write
+
+    set r_addr rotateVertex_X
+    copy r_out alu_a
+    set alu_b -1
+    set alu_op MUL
+    copy alu_out alu_a
+    set r_addr rotateVertex_SinTheta
+    copy r_out alu_b
+    set alu_op MUL
+    copy alu_out w_val
+    set w_addr rotateVertex_temp1
+    pulse write
+
+    set r_addr rotateVertex_Z
+    copy r_out alu_a
+    set r_addr rotateVertex_CosTheta
+    copy r_out alu_b
+    set alu_op MUL
+    copy alu_out alu_b
+
+    set r_addr rotateVertex_temp1
+    copy r_out alu_a
+    set alu_op ADD
+
+    copy alu_out alu_a
+    set alu_b 127
+    set alu_op DIV
+    copy alu_out w_val
+    set w_addr rotateVertex_SaveZ
+    pulse write
+
+    set r_addr rotateVertex_return
+    copy r_out pc
+
+mark rotate
+    # do stuff
+
+mark project
+    # do stuff
