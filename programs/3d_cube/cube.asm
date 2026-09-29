@@ -239,7 +239,8 @@ mark get_sin
     set w_addr sinOut
     pulse write
 
-    set pc sinExit
+    set r_addr sinExit
+    copy r_out pc
 
 const sinExit 518
 
@@ -362,6 +363,10 @@ const getVertex_Z 559
 const getVertexReturnNumber 560
 const getVertex_Exit
 mark getVertex
+    set w_addr getVertexReturnNumber
+    set w_val 0
+    pulse write
+
     set r_addr getVertex_number
     copy r_out pc_value
 
@@ -394,6 +399,10 @@ mark getVertex
 
     mark getVertexReturn0
 
+    set w_addr getVertexReturnNumber
+    set w_val 1
+    pulse write
+
     set w_addr getVertex_Y
 
     set pc_target 0
@@ -423,36 +432,41 @@ mark getVertex
 
     mark getVertexReturn1
 
-    set w_addr getVertex_Y
+    set w_addr getVertexReturnNumber
+    set w_val 2
+    pulse write
+
+    set w_addr getVertex_Z
 
     set pc_target 0
-    set pc_jmp cube_0_Y
+    set pc_jmp cube_0_Z
     pulse jump
     set pc_target 1
-    set pc_jmp cube_1_Y
+    set pc_jmp cube_1_Z
     pulse jump
     set pc_target 2
-    set pc_jmp cube_2_Y
+    set pc_jmp cube_2_Z
     pulse jump
     set pc_target 3
-    set pc_jmp cube_3_Y
+    set pc_jmp cube_3_Z
     pulse jump
     set pc_target 4
-    set pc_jmp cube_4_Y
+    set pc_jmp cube_4_Z
     pulse jump
     set pc_target 5
-    set pc_jmp cube_5_Y
+    set pc_jmp cube_5_Z
     pulse jump
     set pc_target 6
-    set pc_jmp cube_6_Y
+    set pc_jmp cube_6_Z
     pulse jump
     set pc_target 7
-    set pc_jmp cube_7_Y
+    set pc_jmp cube_7_Z
     pulse jump
 
     mark getVertexReturn2
 
-    set pc, getVertex_Exit
+    set r_addr getVertex_Exit
+    copy r_out pc
 
 mark getVertexReturn
     set r_addr getVertexReturnNumber
@@ -469,25 +483,48 @@ mark getVertexReturn
 
 const rotate_currentVertex = 556
 mark rotate
-    set r_addr rotate_currentVertex
-    copy r_out alu_a
-    set alu_b 3
-    set alu_op MUL
-    copy alu_out alu_a
-    set alu_b cube_0_X
-    set alu_op ADD
-    copy alu_out r_addr
-    copy r_out rotateVertex_X
+#    set r_addr rotate_currentVertex
+#    copy r_out alu_a
+#    set alu_b 3
+#    set alu_op MUL
+#    copy alu_out alu_a
+#    set alu_b cube_0_X
+#    set alu_op ADD
+#    copy alu_out r_addr
+#    copy r_out rotateVertex_X
+#
+#    copy alu_out alu_a
+#    set alu_b 1
+#    copy alu_out r_addr
+#    copy r_out rotateVertex_Y
+#
+#    copy alu_out alu_a
+#    set alu_b 1
+#    copy alu_out r_addr
+#    copy r_out rotateVertex_Z
 
-    copy alu_out alu_a
-    set alu_b 1
-    copy alu_out r_addr
-    copy r_out rotateVertex_Y
+    set w_addr getVertex_Exit
+    set w_val getVertex_Exit1
+    pulse w_val
 
-    copy alu_out alu_a
-    set alu_b 1
-    copy alu_out r_addr
-    copy r_out rotateVertex_Z
+    set pc, getVertex
+
+    mark getVertex_Exit1
+
+    set r_addr getVertex_X
+    copy r_out w_val
+    set w_addr rotateVertex_X
+    pulse write
+
+    set r_addr getVertex_Y
+    copy r_out w_val
+    set w_addr rotateVertex_Y
+    pulse write
+
+    set r_addr getVertex_Z
+    copy r_out w_val
+    set w_addr rotateVertex_Z
+    pulse write
 
     set r_addr rotate_currentVertex
     copy r_out alu_a
@@ -517,32 +554,51 @@ mark rotate
     copy r_out w_val
     pulse write
 
-    set pc, get_sin
-
     set w_addr sinExit
-    copy sinExit1 w_val
-    write
+    set w_val sinExit1
+    pulse write
+
+    set pc, get_sin
 
     mark sinExit1
 
     set r_addr sinOut
-    copy r_out rotateVertex_SinTheta
+    copy r_out w_val
+    set w_addr rotateVertex_SinTheta
+    pulse write
 
     set r_addr rotY
     copy r_out alu_a
     set alu_b 9
     set alu_op ADD
+    copy alu_out alu_a
+    set alu_b 36
+    set alu_op MOD
+
     copy alu_out w_val
     set w_addr sin
     pulse write
 
+    set w_addr sinExit
+    set w_val sinExit2
+    pulse write
+
     set pc, get_sin
 
-    set w_addr sinExit
-    copy sinExit2 w_val
-    write
-
     mark sinExit2
+
+    set r_addr sinOut
+    copy r_out w_val
+    set w_addr rotateVertex_CosTheta
+    pulse write
+
+    set w_addr rotateVertex_return
+    set w_val rotateVertex_return1
+    pulse write
+
+    set pc rotateVertex
+
+    mark rotateVertex_return1
 
     set r_addr rotate_currentVertex
     copy r_out alu_a
@@ -550,7 +606,7 @@ mark rotate
     set alu_op ADD
     copy alu_out w_val
     set w_addr rotate_currentVertex
-    write
+    pulse write
 
     copy alu_out pc_value
     set pc_target 8
