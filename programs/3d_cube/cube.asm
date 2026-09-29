@@ -361,7 +361,7 @@ const getVertex_X 557
 const getVertex_Y 558
 const getVertex_Z 559
 const getVertexReturnNumber 560
-const getVertex_Exit
+const getVertex_Exit 561
 mark getVertex
     set w_addr getVertexReturnNumber
     set w_val 0
@@ -615,5 +615,82 @@ mark rotate
 
     set pc rotate
 
+
+const projectVertex_VertexNumber 562
+const projectVertex_X 563
+const projectVertex_Y 564
+const projectVertex_temp1 565
+const projectVertex_Exit 566
+mark projectVertex
+    set w_addr getVertex_number
+    set r_addr projectVertex_VertexNumber
+    copy r_out w_addr
+    pulse write
+
+    set w_addr getVertex_Exit
+    set w_val projectVertex_getVertxExit
+    pulse write
+
+    set pc getVertex
+
+    mark projectVertex_getVertexExit
+
+    # projectedX = ( X * FocalLength ) / ( Z + FocalLength )
+
+    set r_addr getVertex_X
+    copy r_out alu_a
+    set r_addr focalLength
+    copy r_out alu_b
+    set alu_op MUL
+    copy r_out w_val
+    set w_addr projectVertex_temp1
+    pulse write
+
+    set r_addr getVertex_Z
+    copy r_out alu_a
+    set r_addr focalLength
+    copy r_out alu_b
+    set alu_op ADD
+    copy r_out alu_b
+
+    set r_addr projectVertex_temp1
+    copy r_out alu_a
+    set alu_op DIV
+    copy alu_out w_addr
+    set w_val projectVertex_X
+    pulse write
+
+    set r_addr getVertex_Y
+    copy r_out alu_a
+    set r_addr focalLength
+    copy r_out alu_b
+    set alu_op MUL
+    copy r_out w_val
+    set w_addr projectVertex_temp1
+    pulse write
+
+    set r_addr getVertex_Z
+    copy r_out alu_a
+    set r_addr focalLength
+    copy r_out alu_b
+    set alu_op ADD
+    copy r_out alu_b
+
+    set r_addr projectVertex_temp1
+    copy r_out alu_a
+    set alu_op DIV
+    copy alu_out w_addr
+    set w_val projectVertex_Y
+    pulse write
+
+    set r_addr projectVertex_Exit
+    copy r_out pc
+
 mark project
-    # do stuff
+    # stuff
+
+mark loop
+    # more stuff
+
+mark main
+    main stuff
