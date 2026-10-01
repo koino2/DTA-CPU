@@ -999,8 +999,184 @@ mark drawLine
 
         set pc drawLine_loop
 
-mark drawLines
+const A1 602
+const A2 603
+const A3 604
+const A4 605
+const A5 606
+const A6 607
+const A7 608
+const A8 609
+const A9 610
+const A10 611
+const A11 612
+const A12 613
 
+const B1 614
+const B2 615
+const B3 616
+const B4 617
+const B5 618
+const B6 619
+const B7 620
+const B8 621
+const B9 622
+const B10 623
+const B11 624
+const B12 625
+
+const initLines_Exit
+mark initLines
+    set w_addr A1
+    set w_val 0
+    pulse write
+    set w_addr B1
+    set w_val 1
+    pulse write
+
+    set w_addr A2
+    set w_val 0
+    pulse write
+    set w_addr B2
+    set w_val 2
+    pulse write
+
+    set w_addr A3
+    set w_val 1
+    pulse write
+    set w_addr B3
+    set w_val 3
+    pulse write
+
+    set w_addr A4
+    set w_val 2
+    pulse write
+    set w_addr B4
+    set w_val 3
+    pulse write
+
+    set w_addr A5
+    set w_val 4
+    pulse write
+    set w_addr B5
+    set w_val 5
+    pulse write
+
+    set w_addr A6
+    set w_val 4
+    pulse write
+    set w_addr B6
+    set w_val 6
+    pulse write
+
+    set w_addr A7
+    set w_val 5
+    pulse write
+    set w_addr B7
+    set w_val 7
+    pulse write
+
+    set w_addr A8
+    set w_val 6
+    pulse write
+    set w_addr B8
+    set w_val 7
+    pulse write
+
+    set w_addr A9
+    set w_val 0
+    pulse write
+    set w_addr B9
+    set w_val 4
+    pulse write
+
+    set w_addr A10
+    set w_val 2
+    pulse write
+    set w_addr B10
+    set w_val 6
+    pulse write
+
+    set w_addr A11
+    set w_val 3
+    pulse write
+    set w_addr B11
+    set w_val 7
+    pulse write
+
+    set w_addr A12
+    set w_val 1
+    pulse write
+    set w_addr B12
+    set w_val 5
+    pulse write
+
+    set pc initLines_Exit
+
+const drawLines_Number 626
+const drawLines_Exit 627
+mark drawLines
+    set r_addr drawLines_Number
+    copy r_out alu_a
+    set alu_b A1
+    set alu_op ADD
+    copy alu_out r_addr
+
+    copy r_out alu_a
+    set alu_b 2
+    set alu_op MUL
+    copy alu_out alu_a
+    set alu_b proj_0_X
+    copy alu_out r_addr
+    copy r_out w_val
+    set w_addr drawLine_x0
+
+    copy alu_out alu_a
+    set alu_b 1
+    set alu_op MUL
+    copy alu_out r_addr
+    copy r_out w_val
+    set w_addr drawLine_y0
+
+    set r_addr drawLines_Number
+    copy r_out alu_a
+    set alu_b B1
+    set alu_op ADD
+    copy alu_out r_addr
+
+    copy r_out alu_a
+    set alu_b 2
+    set alu_op MUL
+    copy alu_out alu_a
+    set alu_b proj_0_X
+    copy alu_out r_addr
+    copy r_out w_val
+    set w_addr drawLine_x1
+
+    copy alu_out alu_a
+    set alu_b 1
+    set alu_op MUL
+    copy alu_out r_addr
+    copy r_out w_val
+    set w_addr drawLine_y1
+
+    set pc drawLine
+
+    mark drawLines_drawLine_Exit
+
+    set r_addr drawLines_Number
+    copy r_out alu_a
+    set alu_b 1
+    set alu_op ADD
+    copy alu_out w_val
+    set w_addr drawLines_Number
+    pulse write
+
+    copy alu_out pc_value
+    set pc_target 12
+    set r_addr drawLines_Exit
+    copy r_out pc_jmp
+    pulse jump
 
 mark loop
     set r_addr rotY
@@ -1026,9 +1202,7 @@ mark loop
 
     mark loop_project_Exit
 
-    # todo: line drawing here!!!!
-
-    set pc lineDrawer
+    set pc drawLines
 
     mark loop_lineDrawer_Exit
 
@@ -1038,3 +1212,13 @@ mark main
     set w_addr project_Exit
     set w_val loop_project_Exit
     pulse write
+
+    set w_addr drawLine_Exit
+    set w_val drawLines_drawLine_Exit
+    pulse write
+
+    set w_addr drawLines_Exit
+    set w_val loop_lineDrawer_Exit
+    pulse write
+
+    set pc loop
