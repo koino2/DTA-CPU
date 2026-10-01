@@ -790,13 +790,216 @@ mark project
 
     set pc project
 
-const drawLine_Number 591
-const drawLine_dx 592
-const drawLine_dy 593
-const drawLine_sx 594
-const drawLine_sy 595
-const drawLine_err 596
-mark drawLine 592
+const drawLine_x0 591
+const drawLine_y0 592
+const drawLine_x1 593
+const drawLine_y1 594
+const drawLine_dx 595
+const drawLine_dy 596
+const drawLine_sx 597
+const drawLine_sy 598
+const drawLine_err 599
+const drawLine_e2 600
+const drawLine_Exit 601
+mark drawLine
+    set r_addr drawLine_x1
+    copy r_out alu_a
+    set r_addr drawLine_x0
+    copy r_out alu_b
+    set alu_op SUB
+    copy alu_out alu_a
+    set alu_b -1
+    set alu_op COMP
+    copy alu_out pc_value
+    set pc_target 1
+    set pc_jmp drawLine_dx_init_plus
+    set alu_op MUL
+    mark drawLine_dx_init_plus
+    copy alu_out w_val
+    set w_addr drawLine_dx
+    pulse write
+
+    set r_addr drawLine_y1
+    copy r_out alu_a
+    set r_addr drawLine_y0
+    copy r_out alu_b
+    set alu_op SUB
+    copy alu_out alu_a
+    set alu_b -1
+    set alu_op COMP
+    copy alu_out pc_value
+    set pc_target 1
+    set pc_jmp drawLine_dy_init_plus
+    set alu_op MUL
+    mark drawLine_dy_init_plus
+    copy alu_out w_val
+    set w_addr drawLine_dy
+    pulse write
+
+    set r_addr drawLine_x0
+    copy r_out alu_a
+    set r_addr drawLine_x1
+    copy r_out alu_b
+    set alu_op COMP
+    copy alu_out pc_value
+    set pc_target 2
+    set pc_jmp drawLine_sx_ret1
+    pulse jump
+    set w_val -1
+    set pc drawLine_sx_exit
+    mark drawLine_sx_ret1
+    set w_val 1
+    mark drawLine_sx_exit
+    set w_addr drawLine_sx
+    pulse write
+
+    set r_addr drawLine_y0
+    copy r_out alu_a
+    set r_addr drawLine_y1
+    copy r_out alu_b
+    set alu_op COMP
+    copy alu_out pc_value
+    set pc_target 2
+    set pc_jmp drawLine_sy_ret1
+    pulse jump
+    set w_val -1
+    set pc drawLine_sy_exit
+    mark drawLine_sy_ret1
+    set w_val 1
+    mark drawLine_sy_exit
+    set w_addr drawLine_sy
+    pulse write
+
+    set r_addr drawLine_dx
+    copy r_out alu_a
+    set r_addr drawLine_dy
+    copy r_out alu_b
+    set alu_op SUB
+    copy alu_out w_val
+    set w_addr drawLine_err
+    pulse write
+
+    mark drawLine_loop
+        set dsc_d0 1
+        set r_addr drawLine_x0
+        copy r_out dsc_d1
+        set r_addr drawLine_y0
+        copy r_out dsc_d2
+        set dsc_d3 255
+        set dsc_d4 255
+        set dsc_d5 255
+        pulse dsc_p0
+
+        set r_addr drawLine_x0
+        copy r_out alu_a
+        set r_addr drawLine_x1
+        copy r_out alu_b
+        set alu_op COMP
+        copy r_out pc_value
+        set pc_target 1
+        set pc_jmp drawLine_loop_condition1fail
+        pulse jump
+        set pc_target 2
+        set pc_jmp drawLine_loop_condition1fail
+        pulse jump
+
+        set r_addr drawLine_y0
+        copy r_out alu_a
+        set r_addr drawLine_y1
+        copy r_out alu_b
+        set alu_op COMP
+        copy r_out pc_value
+        set pc_target 1
+        set pc_jmp drawLine_loop_condition1fail
+        pulse jump
+        set pc_target 2
+        set pc_jmp drawLine_loop_condition1fail
+        pulse jump
+
+        set pc drawLine_Exit
+
+        mark drawLine_loop_condition1fail
+
+        set r_addr drawLine_err
+        copy r_out alu_a
+        set alu_b 2
+        set alu_op MUL
+        copy alu_out w_val
+        set w_addr drawLine_e2
+        pulse write
+
+        set r_addr drawLine_dy
+        copy r_out alu_a
+        set alu_b -1
+        set alu_op MUL
+        copy alu_out alu_b
+        set r_addr drawLine_e2
+        copy r_out alu_a
+        set alu_op COMP
+        copy alu_out pc_value
+        set pc_target 0
+        set pc_jmp drawLine_loop_condition2fail
+        pulse jump
+        set pc_target 2
+        set pc_jmp drawLine_loop_condition2fail
+        pulse jump
+
+        set r_addr drawLine_err
+        copy r_out alu_a
+        set r_addr drawLine_dy
+        copy r_out alu_b
+        set alu_op SUB
+        copy alu_out w_val
+        set w_addr drawLine_err
+        pulse write
+
+        set r_addr drawLine_x0
+        copy r_out alu_a
+        set r_addr drawLine_sx
+        copy r_out alu_b
+        set alu_op ADD
+        copy alu_out w_val
+        set w_addr drawLine_x0
+        pulse write
+
+        mark drawLine_loop_condition2fail
+
+        set r_addr drawLine_dx
+        copy alu_out alu_b
+        set r_addr drawLine_e2
+        copy r_out alu_a
+        set alu_op COMP
+        copy alu_out pc_value
+        set pc_target 0
+        set pc_jmp drawLine_loop_condition3fail
+        pulse jump
+        set pc_target 1
+        set pc_jmp drawLine_loop_condition3fail
+        pulse jump
+
+        set r_addr drawLine_err
+        copy r_out alu_a
+        set r_addr drawLine_dx
+        copy r_out alu_b
+        set alu_op ADD
+        copy alu_out w_val
+        set w_addr drawLine_err
+        pulse write
+
+        set r_addr drawLine_y0
+        copy r_out alu_a
+        set r_addr drawLine_sy
+        copy r_out alu_b
+        set alu_op ADD
+        copy alu_out w_val
+        set w_addr drawLine_y0
+        pulse write
+
+        mark drawLine_loop_condition3fail
+
+        set pc drawLine_loop
+
+mark drawLines
 
 
 mark loop
@@ -823,7 +1026,7 @@ mark loop
 
     mark loop_project_Exit
 
-
+    # todo: line drawing here!!!!
 
     set pc lineDrawer
 
