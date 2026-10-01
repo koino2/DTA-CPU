@@ -1,3 +1,6 @@
+nop
+set pc main
+
 mark cube_0_X
     set w_val -20
     set pc getVertexReturn
@@ -120,8 +123,8 @@ mark sin9
     set w_val constSin90
     set pc return_sine
 
-const sinAddress = 512
-const sin90Out = 513
+const sinAddress 512
+const sin90Out 513
 
 mark get_sin90
     set r_addr sinAddress
@@ -168,8 +171,8 @@ mark get_sin90
 
 const sin 514
 const sinOut 515
-const sinHalf = 516
-const orgSine = 517
+const sinHalf 516
+const orgSine 517
 mark get_sin
     set r_addr sin
 
@@ -479,7 +482,7 @@ mark getVertexReturn
     set pc_jmp getVertexReturn2
     pulse jump
 
-const rotate_currentVertex = 556
+const rotate_currentVertex 556
 mark rotate
 #    set r_addr rotate_currentVertex
 #    copy r_out alu_a
@@ -645,7 +648,7 @@ mark getRotatedVertex
     set r_addr getRotatedVertex_Exit
     copy r_out pc
 
-const focalLength = 567
+const focalLength 567
 
 const projectVertex_VertexNumber 568
 const projectVertex_X 569
@@ -1025,7 +1028,7 @@ const B10 623
 const B11 624
 const B12 625
 
-const initLines_Exit
+const initLines_Exit 626
 mark initLines
     set w_addr A1
     set w_val 0
@@ -1113,8 +1116,8 @@ mark initLines
 
     set pc initLines_Exit
 
-const drawLines_Number 626
-const drawLines_Exit 627
+const drawLines_Number 627
+const drawLines_Exit 628
 mark drawLines
     set r_addr drawLines_Number
     copy r_out alu_a
@@ -1179,6 +1182,8 @@ mark drawLines
     pulse jump
 
 mark loop
+    pulse dsc_p1
+
     set r_addr rotY
     copy r_out alu_a
     set alu_b 1
@@ -1206,9 +1211,12 @@ mark loop
 
     mark loop_lineDrawer_Exit
 
+    pulse dsc_p2
+
     set pc loop
 
 mark main
+    set alu_a 6767
     set w_addr project_Exit
     set w_val loop_project_Exit
     pulse write
