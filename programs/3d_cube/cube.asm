@@ -717,11 +717,121 @@ mark projectVertex
     set r_addr projectVertex_Exit
     copy r_out pc
 
+const proj_0_X 573
+const proj_0_Y 574
+const proj_1_X 575
+const proj_1_Y 576
+const proj_2_X 577
+const proj_2_Y 578
+const proj_3_X 579
+const proj_3_Y 580
+const proj_4_X 581
+const proj_4_Y 582
+const proj_5_X 583
+const proj_5_Y 584
+const proj_6_X 585
+const proj_6_Y 586
+const proj_7_X 587
+const proj_7_Y 588
+
+const project_currentVertex 589
+const project_Exit 590
 mark project
-    # stuff
+    set r_addr project_currentVertex
+    copy r_out w_val
+    set w_addr projectVertex_VertexNumber
+    pulse write
+
+    set w_addr projectVertex_Exit
+    set w_val project_projectVertex_Exit1
+    pulse write
+
+    set pc projectVertex
+
+    mark project_projectVertex_Exit1
+
+    set r_addr project_currentVertex
+    copy r_out alu_a
+    set alu_b 2
+    set alu_op MUL
+    copy alu_out alu_a
+    set r_addr proj_0_X
+    copy r_out alu_b
+    set alu_op ADD
+
+    copy alu_out w_addr
+    set r_addr projectVertex_X
+    copy r_out w_val
+    pulse write
+
+    copy alu_out alu_a
+    set alu_b 1
+    set alu_op ADD
+
+    copy alu_out w_val
+    set r_addr projectVertex_Y
+    copy r_out w_addr
+    pulse write
+
+    set r_addr project_currentVertex
+    copy r_out alu_a
+    set alu_b 1
+    set alu_op ADD
+    copy alu_out w_val
+    set w_addr project_currentVertex
+    pulse write
+
+    set r_addr project_currentVertex
+    copy r_out pc_value
+    set pc_target 8
+    set r_addr project_Exit
+    copy r_out pc_jmp
+    pulse jump
+
+    set pc project
+
+const drawLine_Number 591
+const drawLine_dx 592
+const drawLine_dy 593
+const drawLine_sx 594
+const drawLine_sy 595
+const drawLine_err 596
+mark drawLine 592
+
 
 mark loop
-    # more stuff
+    set r_addr rotY
+    copy r_out alu_a
+    set alu_b 1
+    set alu_op ADD
+    copy alu_out alu_a
+    set alu_b 36
+    set alu_op MOD
+    copy alu_out w_val
+    set w_addr rotY
+    pulse write
+
+    set w_addr rotate_currentVertex
+    set w_val 0
+    pulse write
+
+    set w_addr project_currentVertex
+    set w_val 0
+    pulse write
+
+    set pc rotate
+
+    mark loop_project_Exit
+
+
+
+    set pc lineDrawer
+
+    mark loop_lineDrawer_Exit
+
+    set pc loop
 
 mark main
-    main stuff
+    set w_addr project_Exit
+    set w_val loop_project_Exit
+    pulse write
