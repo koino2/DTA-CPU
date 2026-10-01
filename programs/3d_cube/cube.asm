@@ -123,8 +123,8 @@ mark sin9
     set w_val constSin90
     set pc return_sine
 
-const sinAddress 512
-const sin90Out 513
+const sinAddress 2512
+const sin90Out 2513
 
 mark get_sin90
     set r_addr sinAddress
@@ -169,10 +169,10 @@ mark get_sin90
 
     set pc sine90Return
 
-const sin 514
-const sinOut 515
-const sinHalf 516
-const orgSine 517
+const sin 2514
+const sinOut 2515
+const sinHalf 2516
+const orgSine 2517
 mark get_sin
     set r_addr sin
 
@@ -243,54 +243,54 @@ mark get_sin
     set r_addr sinExit
     copy r_out pc
 
-const sinExit 518
+const sinExit 2518
 
-const rot_0_X 519
-const rot_0_Y 520
-const rot_0_Z 521
+const rot_0_X 2519
+const rot_0_Y 2520
+const rot_0_Z 2521
 
-const rot_1_X 522
-const rot_1_Y 523
-const rot_1_Z 524
+const rot_1_X 2522
+const rot_1_Y 2523
+const rot_1_Z 2524
 
-const rot_2_X 525
-const rot_2_Y 526
-const rot_2_Z 527
+const rot_2_X 2525
+const rot_2_Y 2526
+const rot_2_Z 2527
 
-const rot_3_X 528
-const rot_3_Y 529
-const rot_3_Z 530
+const rot_3_X 2528
+const rot_3_Y 2529
+const rot_3_Z 2530
 
-const rot_4_X 531
-const rot_4_Y 532
-const rot_4_Z 533
+const rot_4_X 2531
+const rot_4_Y 2532
+const rot_4_Z 2533
 
-const rot_5_X 534
-const rot_5_Y 535
-const rot_5_Z 536
+const rot_5_X 2534
+const rot_5_Y 2535
+const rot_5_Z 2536
 
-const rot_6_X 537
-const rot_6_Y 538
-const rot_6_Z 539
+const rot_6_X 2537
+const rot_6_Y 2538
+const rot_6_Z 2539
 
-const rot_7_X 540
-const rot_7_Y 541
-const rot_7_Z 542
+const rot_7_X 2540
+const rot_7_Y 2541
+const rot_7_Z 2542
 
-const rotX 543
-const rotY 544
-const rotZ 545
+const rotX 2543
+const rotY 2544
+const rotZ 2545
 
-const rotateVertex_SinTheta 546 # value
-const rotateVertex_CosTheta 547 # value
-const rotateVertex_X 548 # value
-const rotateVertex_Y 549 # value
-const rotateVertex_Z 550 # value
-const rotateVertex_SaveX 551 # address
-const rotateVertex_SaveY 552 # address
-const rotateVertex_SaveZ 553 # address
-const rotateVertex_temp1 554 # address
-const rotateVertex_return 555
+const rotateVertex_SinTheta 2546 # value
+const rotateVertex_CosTheta 2547 # value
+const rotateVertex_X 2548 # value
+const rotateVertex_Y 2549 # value
+const rotateVertex_Z 2550 # value
+const rotateVertex_SaveX 2551 # address
+const rotateVertex_SaveY 2552 # address
+const rotateVertex_SaveZ 2553 # address
+const rotateVertex_temp1 2554 # address
+const rotateVertex_return 2555
 mark rotateVertex
     set r_addr rotateVertex_X
     copy r_out alu_a
@@ -316,12 +316,14 @@ mark rotateVertex
     set alu_b 127
     set alu_op DIV
     copy alu_out w_val
-    set w_addr rotateVertex_SaveX
+    set r_addr rotateVertex_SaveX
+    copy r_out w_addr
     pulse write
 
     set r_addr rotateVertex_Y
     copy r_out w_val
-    set w_addr rotateVertex_SaveY
+    set r_addr rotateVertex_SaveY
+    copy r_out w_addr
     pulse write
 
     set r_addr rotateVertex_X
@@ -351,18 +353,19 @@ mark rotateVertex
     set alu_b 127
     set alu_op DIV
     copy alu_out w_val
-    set w_addr rotateVertex_SaveZ
+    set r_addr rotateVertex_SaveZ
+    copy r_out w_addr
     pulse write
 
     set r_addr rotateVertex_return
     copy r_out pc
 
-const getVertex_number 556
-const getVertex_X 557
-const getVertex_Y 558
-const getVertex_Z 559
-const getVertexReturnNumber 560
-const getVertex_Exit 561
+const getVertex_number 2556
+const getVertex_X 2557
+const getVertex_Y 2558
+const getVertex_Z 2559
+const getVertexReturnNumber 2560
+const getVertex_Exit 2561
 mark getVertex
     set w_addr getVertexReturnNumber
     set w_val 0
@@ -482,7 +485,7 @@ mark getVertexReturn
     set pc_jmp getVertexReturn2
     pulse jump
 
-const rotate_currentVertex 556
+const rotate_currentVertex 2556
 mark rotate
 #    set r_addr rotate_currentVertex
 #    copy r_out alu_a
@@ -616,11 +619,11 @@ mark rotate
 
     set pc rotate
 
-const getRotatedVertex_Number 562
-const getRotatedVertex_X 563
-const getRotatedVertex_Y 564
-const getRotatedVertex_Z 565
-const getRotatedVertex_Exit 566
+const getRotatedVertex_Number 2562
+const getRotatedVertex_X 2563
+const getRotatedVertex_Y 2564
+const getRotatedVertex_Z 2565
+const getRotatedVertex_Exit 2566
 mark getRotatedVertex
     set r_addr getRotatedVertex_Number
     copy r_out alu_a
@@ -648,13 +651,13 @@ mark getRotatedVertex
     set r_addr getRotatedVertex_Exit
     copy r_out pc
 
-const focalLength 567
+const focalLength 2567
 
-const projectVertex_VertexNumber 568
-const projectVertex_X 569
-const projectVertex_Y 570
-const projectVertex_temp1 571
-const projectVertex_Exit 572
+const projectVertex_VertexNumber 2568
+const projectVertex_X 2569
+const projectVertex_Y 2570
+const projectVertex_temp1 2571
+const projectVertex_Exit 2572
 mark projectVertex
     set w_addr getRotatedVertex_Number
     set r_addr projectVertex_VertexNumber
@@ -713,32 +716,32 @@ mark projectVertex
     set r_addr projectVertex_temp1
     copy r_out alu_a
     set alu_op DIV
-    copy alu_out w_addr
-    set w_val projectVertex_Y
+    copy alu_out w_val
+    set w_addr projectVertex_Y
     pulse write
 
     set r_addr projectVertex_Exit
     copy r_out pc
 
-const proj_0_X 573
-const proj_0_Y 574
-const proj_1_X 575
-const proj_1_Y 576
-const proj_2_X 577
-const proj_2_Y 578
-const proj_3_X 579
-const proj_3_Y 580
-const proj_4_X 581
-const proj_4_Y 582
-const proj_5_X 583
-const proj_5_Y 584
-const proj_6_X 585
-const proj_6_Y 586
-const proj_7_X 587
-const proj_7_Y 588
+const proj_0_X 2573
+const proj_0_Y 2574
+const proj_1_X 2575
+const proj_1_Y 2576
+const proj_2_X 2577
+const proj_2_Y 2578
+const proj_3_X 2579
+const proj_3_Y 2580
+const proj_4_X 2581
+const proj_4_Y 2582
+const proj_5_X 2583
+const proj_5_Y 2584
+const proj_6_X 2585
+const proj_6_Y 2586
+const proj_7_X 2587
+const proj_7_Y 2588
 
-const project_currentVertex 589
-const project_Exit 590
+const project_currentVertex 2589
+const project_Exit 2590
 mark project
     set r_addr project_currentVertex
     copy r_out w_val
@@ -793,17 +796,17 @@ mark project
 
     set pc project
 
-const drawLine_x0 591
-const drawLine_y0 592
-const drawLine_x1 593
-const drawLine_y1 594
-const drawLine_dx 595
-const drawLine_dy 596
-const drawLine_sx 597
-const drawLine_sy 598
-const drawLine_err 599
-const drawLine_e2 600
-const drawLine_Exit 601
+const drawLine_x0 2591
+const drawLine_y0 2592
+const drawLine_x1 2593
+const drawLine_y1 2594
+const drawLine_dx 2595
+const drawLine_dy 2596
+const drawLine_sx 2597
+const drawLine_sy 2598
+const drawLine_err 2599
+const drawLine_e2 2600
+const drawLine_Exit 2601
 mark drawLine
     set r_addr drawLine_x1
     copy r_out alu_a
@@ -919,7 +922,8 @@ mark drawLine
         set pc_jmp drawLine_loop_condition1fail
         pulse jump
 
-        set pc drawLine_Exit
+        set r_addr drawLines_Exit
+        copy r_out pc
 
         mark drawLine_loop_condition1fail
 
@@ -1002,33 +1006,33 @@ mark drawLine
 
         set pc drawLine_loop
 
-const A1 602
-const A2 603
-const A3 604
-const A4 605
-const A5 606
-const A6 607
-const A7 608
-const A8 609
-const A9 610
-const A10 611
-const A11 612
-const A12 613
+const A1 2602
+const A2 2603
+const A3 2604
+const A4 2605
+const A5 2606
+const A6 2607
+const A7 2608
+const A8 2609
+const A9 2610
+const A10 2611
+const A11 2612
+const A12 2613
 
-const B1 614
-const B2 615
-const B3 616
-const B4 617
-const B5 618
-const B6 619
-const B7 620
-const B8 621
-const B9 622
-const B10 623
-const B11 624
-const B12 625
+const B1 2614
+const B2 2615
+const B3 2616
+const B4 2617
+const B5 2618
+const B6 2619
+const B7 2620
+const B8 2621
+const B9 2622
+const B10 2623
+const B11 2624
+const B12 2625
 
-const initLines_Exit 626
+const initLines_Exit 2626
 mark initLines
     set w_addr A1
     set w_val 0
@@ -1114,10 +1118,11 @@ mark initLines
     set w_val 5
     pulse write
 
-    set pc initLines_Exit
+    set r_addr initLines_Exit
+    copy r_out pc
 
-const drawLines_Number 627
-const drawLines_Exit 628
+const drawLines_Number 2627
+const drawLines_Exit 2628
 mark drawLines
     set r_addr drawLines_Number
     copy r_out alu_a
@@ -1136,7 +1141,7 @@ mark drawLines
 
     copy alu_out alu_a
     set alu_b 1
-    set alu_op MUL
+    set alu_op ADD
     copy alu_out r_addr
     copy r_out w_val
     set w_addr drawLine_y0
@@ -1158,7 +1163,7 @@ mark drawLines
 
     copy alu_out alu_a
     set alu_b 1
-    set alu_op MUL
+    set alu_op ADD
     copy alu_out r_addr
     copy r_out w_val
     set w_addr drawLine_y1
@@ -1207,6 +1212,10 @@ mark loop
 
     mark loop_project_Exit
 
+    set w_addr drawLines_Number
+    set w_val 0
+    pulse write
+
     set pc drawLines
 
     mark loop_lineDrawer_Exit
@@ -1216,7 +1225,18 @@ mark loop
     set pc loop
 
 mark main
-    set alu_a 6767
+    set w_addr initLines_Exit
+    set w_val main_initLines_exit
+    pulse write
+
+    set pc initLines
+
+    mark main_initLines_exit
+
+    set w_addr focalLength
+    set w_val 70
+    pulse write
+
     set w_addr project_Exit
     set w_val loop_project_Exit
     pulse write
