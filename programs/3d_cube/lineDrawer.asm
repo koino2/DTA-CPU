@@ -149,7 +149,7 @@ mark drawLine
         pulse jump
 
         set r_addr drawLine_Exit
-        copy alu_out pc
+        copy r_out pc
 
         mark drawLine_loop_condition1fail
 
@@ -249,11 +249,55 @@ mark drawLine
 #    pulse write
 #
 #    set w_addr drawLine_Exit
-#    set w_val main_drawLine_Exit
+#    set w_val main_drawLine_Exit1
 #    pulse write
 #
 #    set pc drawLine
 #
-#    mark main_drawLine_Exit
+#    mark main_drawLine_Exit1
 #
-#    pulse dsc_p1
+#    set dsc_device 0
+#
+#    set w_addr drawLine_x0
+#    set w_val 40
+#    pulse write
+#    set w_addr drawLine_y0
+#    set w_val 60
+#    pulse write
+#    set w_addr drawLine_x1
+#    set w_val 48
+#    pulse write
+#    set w_addr drawLine_y1
+#    set w_val 18
+#    pulse write
+#
+#    set w_addr drawLine_Exit
+#    set w_val main_drawLine_Exit2
+#    pulse write
+#
+#    set pc drawLine
+#
+#    mark main_drawLine_Exit2
+#
+#    set w_addr drawLine_x0
+#    set w_val 3
+#    pulse write
+#    set w_addr drawLine_y0
+#    set w_val 30
+#    pulse write
+#    set w_addr drawLine_x1
+#    set w_val 60
+#    pulse write
+#    set w_addr drawLine_y1
+#    set w_val 5
+#    pulse write
+#
+#    set w_addr drawLine_Exit
+#    set w_val main_drawLine_Exit3
+#    pulse write
+#
+#    set pc drawLine
+#
+#    mark main_drawLine_Exit3
+#
+#    pulse dsc_p2

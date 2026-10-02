@@ -1,27 +1,16 @@
-const focalLength 2567
-
-const projectVertex_VertexNumber 2568
-const projectVertex_X 2569
-const projectVertex_Y 2570
-const projectVertex_temp1 2571
-const projectVertex_Exit 2572
+const focalLength 0
+const projectVertex_VertexX 0
+const projectVertex_VertexY 0
+const projectVertex_VertexZ 0
+const projectVertex_X 0
+const projectVertex_Y 0
+const projectVertex_temp1 0
+const projectVertex_Exit 0
 mark projectVertex
-    set w_addr getRotatedVertex_Number
-    set r_addr projectVertex_VertexNumber
-    copy r_out w_val
-    pulse write
-
-    set w_addr getRotatedVertex_Exit
-    set w_val projectVertex_getVertexExit1
-    pulse write
-
-    set pc getRotatedVertex
-
-    mark projectVertex_getVertexExit1
 
     # projectedX = ( X * FocalLength ) / ( Z + FocalLength )
 
-    set r_addr getRotatedVertex_X
+    set r_addr projectVertex_VertexX
     copy r_out alu_a
     set r_addr focalLength
     copy r_out alu_b
@@ -30,7 +19,7 @@ mark projectVertex
     set w_addr projectVertex_temp1
     pulse write
 
-    set r_addr getRotatedVertex_Z
+    set r_addr projectVertex_VertexZ
     copy r_out alu_a
     set r_addr focalLength
     copy r_out alu_b
@@ -44,7 +33,7 @@ mark projectVertex
     set w_addr projectVertex_X
     pulse write
 
-    set r_addr getRotatedVertex_Y
+    set r_addr projectVertex_VertexY
     copy r_out alu_a
     set r_addr focalLength
     copy r_out alu_b
@@ -53,7 +42,7 @@ mark projectVertex
     set w_addr projectVertex_temp1
     pulse write
 
-    set r_addr getRotatedVertex_Z
+    set r_addr projectVertex_VertexZ
     copy r_out alu_a
     set r_addr focalLength
     copy r_out alu_b
@@ -70,25 +59,25 @@ mark projectVertex
     set r_addr projectVertex_Exit
     copy r_out pc
 
-const proj_0_X 2573
-const proj_0_Y 2574
-const proj_1_X 2575
-const proj_1_Y 2576
-const proj_2_X 2577
-const proj_2_Y 2578
-const proj_3_X 2579
-const proj_3_Y 2580
-const proj_4_X 2581
-const proj_4_Y 2582
-const proj_5_X 2583
-const proj_5_Y 2584
-const proj_6_X 2585
-const proj_6_Y 2586
-const proj_7_X 2587
-const proj_7_Y 2588
+const proj_0_X 0
+const proj_0_Y 0
+const proj_1_X 0
+const proj_1_Y 0
+const proj_2_X 0
+const proj_2_Y 0
+const proj_3_X 0
+const proj_3_Y 0
+const proj_4_X 0
+const proj_4_Y 0
+const proj_5_X 0
+const proj_5_Y 0
+const proj_6_X 0
+const proj_6_Y 0
+const proj_7_X 0
+const proj_7_Y 0
 
-const project_currentVertex 2589
-const project_Exit 2590
+const project_currentVertex 0
+const project_Exit 0
 mark project
     set r_addr project_currentVertex
     copy r_out w_val
