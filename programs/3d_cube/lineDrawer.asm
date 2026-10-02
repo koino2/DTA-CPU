@@ -1,18 +1,18 @@
 nop
 set pc main
 
-const drawLine_x0 2591
-const drawLine_y0 2592
-const drawLine_x1 2593
-const drawLine_y1 2594
-const drawLine_dx 2595
-const drawLine_dy 2596
-const drawLine_sx 2597
-const drawLine_sy 2598
-const drawLine_err 2599
-const drawLine_e2 2600
-const drawLine_Exit 2601
-const drawLine_temp1 2700
+const drawLine_x0 0
+const drawLine_y0 0
+const drawLine_x1 0
+const drawLine_y1 0
+const drawLine_dx 0
+const drawLine_dy 0
+const drawLine_sx 0
+const drawLine_sy 0
+const drawLine_err 0
+const drawLine_e2 0
+const drawLine_Exit 0
+const drawLine_temp1 0
 mark drawLine
     set r_addr drawLine_x1
     copy r_out alu_a
@@ -232,28 +232,28 @@ mark drawLine
 
         set pc drawLine_loop
 
-mark main
-    set dsc_device 0
-
-    set w_addr drawLine_x0
-    set w_val 5
-    pulse write
-    set w_addr drawLine_y0
-    set w_val 5
-    pulse write
-    set w_addr drawLine_x1
-    set w_val 50
-    pulse write
-    set w_addr drawLine_y1
-    set w_val 50
-    pulse write
-
-    set w_addr drawLine_Exit
-    set w_val main_drawLine_Exit
-    pulse write
-
-    set pc drawLine
-
-    mark main_drawLine_Exit
-
-    pulse dsc_p1
+#mark main
+#    set dsc_device 0
+#
+#    set w_addr drawLine_x0
+#    set w_val 5
+#    pulse write
+#    set w_addr drawLine_y0
+#    set w_val 5
+#    pulse write
+#    set w_addr drawLine_x1
+#    set w_val 50
+#    pulse write
+#    set w_addr drawLine_y1
+#    set w_val 50
+#    pulse write
+#
+#    set w_addr drawLine_Exit
+#    set w_val main_drawLine_Exit
+#    pulse write
+#
+#    set pc drawLine
+#
+#    mark main_drawLine_Exit
+#
+#    pulse dsc_p1
