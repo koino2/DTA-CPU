@@ -81,16 +81,16 @@ mark cube_7_Z
     set w_val 20
     set pc getVertexReturn
 
-const constSin0    0
-const constSin10  22
-const constSin20  43
-const constSin30  64
-const constSin40  82
-const constSin50  97
-const constSin60 110
-const constSin70 119
-const constSin80 125
-const constSin90 127
+const constSin0    0!
+const constSin10  22!
+const constSin20  43!
+const constSin30  64!
+const constSin40  82!
+const constSin50  97!
+const constSin60 110!
+const constSin70 119!
+const constSin80 125!
+const constSin90 127!
 
 mark sin0
     set w_val constSin0
@@ -361,7 +361,7 @@ mark rotateVertex
     copy r_out pc
 
 const getVertex_number 2556
-const getVertex_X 2557
+const getVertex_X 3000
 const getVertex_Y 2558
 const getVertex_Z 2559
 const getVertexReturnNumber 2560
@@ -485,7 +485,7 @@ mark getVertexReturn
     set pc_jmp getVertexReturn2
     pulse jump
 
-const rotate_currentVertex 2556
+const rotate_currentVertex 2557
 mark rotate
 #    set r_addr rotate_currentVertex
 #    copy r_out alu_a
@@ -509,6 +509,11 @@ mark rotate
 
     set w_addr getVertex_Exit
     set w_val getVertex_Exit1
+    pulse write
+
+    set r_addr rotate_currentVertex
+    copy r_out w_val
+    set w_addr getVertex_number
     pulse write
 
     set pc, getVertex
@@ -774,9 +779,9 @@ mark project
     set alu_b 1
     set alu_op ADD
 
-    copy alu_out w_val
+    copy alu_out w_addr
     set r_addr projectVertex_Y
-    copy r_out w_addr
+    copy r_out w_val
     pulse write
 
     set r_addr project_currentVertex
@@ -807,20 +812,31 @@ const drawLine_sy 2598
 const drawLine_err 2599
 const drawLine_e2 2600
 const drawLine_Exit 2601
+const drawLine_temp1 2700
 mark drawLine
     set r_addr drawLine_x1
     copy r_out alu_a
     set r_addr drawLine_x0
     copy r_out alu_b
     set alu_op SUB
+    copy alu_out w_val
+    set w_addr drawLine_temp1
+    pulse write
+
     copy alu_out alu_a
     set alu_b -1
     set alu_op COMP
     copy alu_out pc_value
     set pc_target 1
     set pc_jmp drawLine_dx_init_plus
-    set alu_op MUL
+    set r_addr drawLine_temp1
+    copy r_out alu_a
+    pulse jump
+    set pc drawLine_dx_init_exit
     mark drawLine_dx_init_plus
+    set alu_b 1
+    mark drawLine_dx_init_exit
+    set alu_op MUL
     copy alu_out w_val
     set w_addr drawLine_dx
     pulse write
@@ -830,14 +846,24 @@ mark drawLine
     set r_addr drawLine_y0
     copy r_out alu_b
     set alu_op SUB
+    copy alu_out w_val
+    set w_addr drawLine_temp1
+    pulse write
+
     copy alu_out alu_a
     set alu_b -1
     set alu_op COMP
     copy alu_out pc_value
     set pc_target 1
     set pc_jmp drawLine_dy_init_plus
-    set alu_op MUL
+    set r_addr drawLine_temp1
+    copy r_out alu_a
+    pulse jump
+    set pc drawLine_dy_init_exit
     mark drawLine_dy_init_plus
+    set alu_b 1
+    mark drawLine_dy_init_exit
+    set alu_op MUL
     copy alu_out w_val
     set w_addr drawLine_dy
     pulse write
@@ -901,7 +927,7 @@ mark drawLine
         set r_addr drawLine_x1
         copy r_out alu_b
         set alu_op COMP
-        copy r_out pc_value
+        copy alu_out pc_value
         set pc_target 1
         set pc_jmp drawLine_loop_condition1fail
         pulse jump
@@ -914,7 +940,7 @@ mark drawLine
         set r_addr drawLine_y1
         copy r_out alu_b
         set alu_op COMP
-        copy r_out pc_value
+        copy alu_out pc_value
         set pc_target 1
         set pc_jmp drawLine_loop_condition1fail
         pulse jump
@@ -922,7 +948,7 @@ mark drawLine
         set pc_jmp drawLine_loop_condition1fail
         pulse jump
 
-        set r_addr drawLines_Exit
+        set r_addr drawLine_Exit
         copy r_out pc
 
         mark drawLine_loop_condition1fail
@@ -972,7 +998,7 @@ mark drawLine
         mark drawLine_loop_condition2fail
 
         set r_addr drawLine_dx
-        copy alu_out alu_b
+        copy r_out alu_b
         set r_addr drawLine_e2
         copy r_out alu_a
         set alu_op COMP
@@ -1135,6 +1161,7 @@ mark drawLines
     set alu_op MUL
     copy alu_out alu_a
     set alu_b proj_0_X
+    set alu_op ADD
     copy alu_out r_addr
     copy r_out w_val
     set w_addr drawLine_x0
@@ -1157,6 +1184,7 @@ mark drawLines
     set alu_op MUL
     copy alu_out alu_a
     set alu_b proj_0_X
+    set alu_op ADD
     copy alu_out r_addr
     copy r_out w_val
     set w_addr drawLine_x1
@@ -1225,6 +1253,7 @@ mark loop
     set pc loop
 
 mark main
+    set dsc_device 0
     set w_addr initLines_Exit
     set w_val main_initLines_exit
     pulse write
