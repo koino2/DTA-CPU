@@ -265,19 +265,22 @@ mark getRotatedVertex
     copy alu_out alu_a
     set alu_b rot_0_X
     set alu_op ADD
-    copy alu_out w_val
+    copy alu_out r_addr
+    copy r_out w_val
     set w_addr getRotatedVertex_X
     pulse write
 
     copy alu_out alu_a
     set alu_b 1
-    copy alu_out w_val
+    copy alu_out r_addr
+    copy r_out w_val
     set w_addr getRotatedVertex_Y
     pulse write
 
     copy alu_out alu_a
     set alu_b 1
-    copy alu_out w_val
+    copy alu_out r_addr
+    copy r_out w_val
     set w_addr getRotatedVertex_Z
     pulse write
 

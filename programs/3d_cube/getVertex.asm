@@ -111,6 +111,7 @@ mark getVertex
     copy r_out pc
 
 mark getVertexReturn
+    pulse write
     set r_addr getVertexReturnNumber
     copy r_out pc_value
     set pc_target 0

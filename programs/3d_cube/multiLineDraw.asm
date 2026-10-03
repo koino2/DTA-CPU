@@ -512,30 +512,3 @@ mark main
     mark main_drawLines_exit
 
     pulse dsc_p2
-
-    set r_addr proj_0_X
-    copy r_out w_val
-    set w_addr drawLine_x0
-    pulse write
-    set r_addr proj_0_Y
-    copy r_out w_val
-    set w_addr drawLine_y0
-    pulse write
-    set r_addr proj_1_X
-    copy r_out w_val
-    set w_addr drawLine_x1
-    pulse write
-    set r_addr proj_1_Y
-    copy r_out w_val
-    set w_addr drawLine_y1
-    pulse write
-
-#    set w_addr drawLine_Exit
-#    set w_val greg
-#    pulse write
-#
-#    set pc drawLine
-#
-#    mark greg
-#
-#    pulse dsc_p2

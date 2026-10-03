@@ -81,7 +81,30 @@ const project_Exit 0
 mark project
     set r_addr project_currentVertex
     copy r_out w_val
-    set w_addr projectVertex_VertexNumber
+    set w_addr getRotatedVertex_Number
+    pulse write
+
+    set w_addr getRotatedVertex_Exit
+    set w_val project_getRotatedVertex_Exit1
+    pulse write
+
+    set pc getRotatedVertex
+
+    mark project_getRotatedVertex_Exit1
+
+    set r_addr getRotatedVertex_X
+    copy r_out w_val
+    set w_addr projectVertex_VertexX
+    pulse write
+
+    set r_addr getRotatedVertex_Y
+    copy r_out w_val
+    set w_addr projectVertex_VertexY
+    pulse write
+
+    set r_addr getRotatedVertex_Z
+    copy r_out w_val
+    set w_addr projectVertex_VertexZ
     pulse write
 
     set w_addr projectVertex_Exit
