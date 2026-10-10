@@ -120,8 +120,9 @@ mark project
     set alu_b 2
     set alu_op MUL
     copy alu_out alu_a
-    set r_addr proj_0_X
-    copy r_out alu_b
+    #set r_addr proj_0_X
+    #copy r_out alu_b
+    set alu_b proj_0_X
     set alu_op ADD
 
     copy alu_out w_addr

@@ -45,6 +45,9 @@ mark getVertex
     set w_val 1
     pulse write
 
+    set r_addr getVertex_number
+    copy r_out pc_value
+
     set w_addr getVertex_Y
 
     set pc_target 0
@@ -77,6 +80,9 @@ mark getVertex
     set w_addr getVertexReturnNumber
     set w_val 2
     pulse write
+
+    set r_addr getVertex_number
+    copy r_out pc_value
 
     set w_addr getVertex_Z
 
