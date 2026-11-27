@@ -1,17 +1,23 @@
 # License
 
-Copyright (c) 2026
+**MIT License**
 
-All rights reserved.
+Copyright (c) 2026 Anchith
 
-This software, including its source code, assets, artwork, audio, documentation, and other associated materials (collectively, the "Software"), is the property of the developer.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-Permission is **not** granted to copy, modify, distribute, publish, sublicense, sell, or commercially use the Software or substantial portions of it without prior written permission from the copyright holder.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-You may view the source code for personal, educational, or reference purposes, provided that you do not redistribute or commercially use it.
-
-The Software is provided "as is", without warranty of any kind. The copyright holder shall not be liable for any claim, damages, or other liability arising from the use of the Software.
-
-Third-party libraries, assets, or other materials included with or used by the Software remain subject to their respective licenses and copyrights.
-
-No rights are granted except those explicitly stated above.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
