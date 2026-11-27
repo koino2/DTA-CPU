@@ -9,7 +9,7 @@ There are several demo / test programs located in ``/programs``.
 Keep in mind that many of these were made during development of the ISA and won't work properly.
 
 ### Emulator
-I have also made an emulator for a DTA processor, which can be found at [this repo](github.com/koino2/DTA-Emulator)
+I have also made an emulator for a DTA processor, which can be found at [this repo](https://www.github.com/koino2/DTA-Emulator)
 
 ## Instructions
 The ISA only has 3 instructions: ``COPY [01]``, ``SET [10]``, and ``PULSE [11]``.
